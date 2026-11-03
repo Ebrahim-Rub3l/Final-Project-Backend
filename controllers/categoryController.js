@@ -24,6 +24,44 @@ let getallCategoryController = async (req , res)=>{
         })
 }
 
+const CategoryUpdateController = async (req , res) => {
+    const { id } = req.params
 
 
-module.exports = {categoryController , getallCategoryController}
+
+    let data = await Category.findByIdAndUpdate({_id:id}, {...req.body } , {new : true})
+    if(!data){
+        return res.json({
+            success : false ,
+            message:" No Product Found"
+        })
+    }
+
+    return res.json({
+            success : true ,
+            message : "Product Update Successfully",
+            data
+        })
+}
+
+const DeleteCategoryController = async (req , res) => {
+    const { id} = req.params
+
+    let data = await Category.findByIdAndDelete({_id:id})
+    if(!data){
+        return res.json({
+            success : false ,
+            message:" No Product Found"
+        })
+    }
+
+    return res.json({
+            success : true ,
+            message:" Deleted Product Successfully",
+            data
+        })
+}
+
+
+
+module.exports = {categoryController , getallCategoryController , CategoryUpdateController , DeleteCategoryController}
